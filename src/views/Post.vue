@@ -28,6 +28,23 @@
         </v-col>
       </v-row>
     </template>
+    <template v-else-if="err">
+      <v-row justify="center">
+        <v-col cols="auto">
+          <v-card class="text-center" flat>
+            <v-icon size="96px">mdi-alert-circle-outline</v-icon>
+            <v-card-title>An error occurred</v-card-title>
+            <v-card-text>
+              <code>{{ err.message }}</code>
+            </v-card-text>
+            <v-divider/>
+            <v-card-actions>
+              <v-btn color="primary" outlined block @click="load">Reload</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </template>
     <template v-else>
       <v-row justify="center">
         <v-col cols="auto">
@@ -49,20 +66,32 @@ export default class Post extends Vue {
   @Prop({ required: true })
   slug!: string
 
+  err: Error | null = null
+
   post: BPost | null = null
   prev: BPost | null = null
   next: BPost | null = null
 
   @Watch('slug', { immediate: true })
   async _wslug () {
-    this.post = null
-    const res = await butter.post.retrieve(this.slug)
-    const { data, meta } = res.data
-    this.post = data
-    this.prev = meta.previous_post
-    this.next = meta.next_post
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.$store.commit('updateTitle', this.post!.title)
+    this.load()
+  }
+
+  async load () {
+    try {
+      this.post = null
+      this.err = null
+
+      const res = await butter.post.retrieve(this.slug)
+      const { data, meta } = res.data
+      this.post = data
+      this.prev = meta.previous_post
+      this.next = meta.next_post
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      this.$store.commit('updateTitle', this.post!.title)
+    } catch (e) {
+      this.err = e
+    }
   }
 }
 </script>
