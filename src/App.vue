@@ -11,7 +11,7 @@
       <v-list nav>
         <v-list-item href="https://zhangzisu.cn/" target="_blank">
           <v-list-item-avatar tile size="24">
-            <v-img contain :src="require('@/assets/logo.png')"/>
+            <v-img id="logo" contain :src="require('@/assets/logo.png')"/>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>ZhangZisu.CN</v-list-item-title>
@@ -23,6 +23,14 @@
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>Posts</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item @click="changeTheme">
+          <v-list-item-avatar tile size="24">
+            <v-icon>mdi-brightness-6</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title>{{ this.$vuetify.theme.dark ? 'Dark' : 'White' }} theme</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item href="https://github.com/zhangzisu-cn/blog" target="_blank">
@@ -53,6 +61,15 @@ export default class App extends Vue {
     const stack = this.$store.state.bg
     return stack[stack.length - 1] || ''
   }
+
+  created () {
+    this.$vuetify.theme.dark = !!localStorage.getItem('theme-dark')
+  }
+
+  changeTheme () {
+    this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    localStorage.setItem('theme-dark', this.$vuetify.theme.dark ? '1' : '')
+  }
 }
 </script>
 
@@ -65,5 +82,8 @@ export default class App extends Vue {
 }
 #background .v-image__image {
   transition: .3s;
+}
+.theme--dark #logo .v-image__image {
+  filter: invert(1);
 }
 </style>

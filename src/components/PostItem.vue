@@ -3,7 +3,7 @@
     <v-card-title v-text="post.title"/>
     <v-divider/>
     <v-card-text>
-      <article class="markdown-body" v-html="post.body"/>
+      <article class="markdown-body line-numbers" v-html="post.body" ref="content"/>
     </v-card-text>
     <v-divider/>
     <div class="pl-1 pr-1">
@@ -18,6 +18,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { BPost } from '@/plugins/butter'
+import Prism from '@/plugins/prism'
 
 @Component
 export default class PostItem extends Vue {
@@ -26,22 +27,36 @@ export default class PostItem extends Vue {
 
   bgcur = false
 
-  @Watch('post.slug', { immediate: true })
+  @Watch('post.slug')
   _wslug () {
+    this.highlight()
     this.bgPop()
     this.bgPush()
+  }
+
+  mounted () {
+    this.highlight()
+
+    const stack = this.$store.state.bg
+    const back = stack[stack.length - 1]
+    if (this.post.featured_image === back) {
+      this.bgcur = true
+    } else if (this.post.featured_image) {
+      this.$store.commit('bg:push', this.post.featured_image)
+      this.bgcur = true
+    }
   }
 
   beforeDestroy () {
     this.bgPop()
   }
 
+  highlight () {
+    Prism.highlightAllUnder(this.$refs.content as Element)
+  }
+
   bgPush () {
-    const stack = this.$store.state.bg
-    const back = stack[stack.length - 1]
-    if (this.post.featured_image === back) {
-      this.bgcur = true
-    } else if (this.post.featured_image) {
+    if (this.post.featured_image) {
       this.$store.commit('bg:push', this.post.featured_image)
       this.bgcur = true
     }

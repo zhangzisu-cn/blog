@@ -1,3 +1,5 @@
+$body-font-family: 'Roboto', 'Noto Sans SC', 'Microsoft YaHei', sans-serif !default;
+
 $code-color: initial;
 $code-kbd-border-radius: initial;
 $code-kbd-font-size: initial;
@@ -13,6 +15,6 @@ $material-light: (
 $material-dark: (
   'background': transparent,
   'app-bar': #1976d2c0,
-  'navigation-drawer': #ffffffc0,
-  'cards': #ffffffc0
+  'navigation-drawer': #000000c0,
+  'cards': #000000c0
 )
