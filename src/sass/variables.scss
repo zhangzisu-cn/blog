@@ -2,3 +2,17 @@ $code-color: initial;
 $code-kbd-border-radius: initial;
 $code-kbd-font-size: initial;
 $code-kbd-font-weight: initial;
+
+$material-light: (
+  'background': transparent,
+  'app-bar': #1976d2c0,
+  'navigation-drawer': #ffffffc0,
+  'cards': #ffffffc0
+);
+
+$material-dark: (
+  'background': transparent,
+  'app-bar': #1976d2c0,
+  'navigation-drawer': #ffffffc0,
+  'cards': #ffffffc0
+)

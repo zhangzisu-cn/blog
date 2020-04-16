@@ -5,12 +5,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    title: 'ZhangZisu.CN Blog'
+    title: 'ZhangZisu.CN Blog',
+    bg: [] as string[]
   },
   mutations: {
-    updateTitle (state, title: string) {
+    'title:update' (state, title: string) {
       document.title = title + ' - ZhangZisu.CN Blog'
       state.title = title
+    },
+    'bg:push' (state, url: string) {
+      state.bg.push(url)
+    },
+    'bg:pop' (state) {
+      state.bg.pop()
     }
   },
   actions: {

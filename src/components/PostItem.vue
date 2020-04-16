@@ -1,7 +1,5 @@
 <template>
   <v-card>
-    <v-img v-if="post.featured_image" :src="post.featured_image" :alt="post.featured_image_alt" max-height="128px">
-    </v-img>
     <v-card-title v-text="post.title"/>
     <v-divider/>
     <v-card-text v-html="post.body" style="overflow: hidden;"/>
@@ -16,12 +14,38 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { BPost } from '@/plugins/butter'
 
 @Component
 export default class PostItem extends Vue {
   @Prop({ required: true })
   post!: BPost
+
+  bgcur = false
+
+  @Watch('post.slug', { immediate: true })
+  _wslug () {
+    this.bgPop()
+    this.bgPush()
+  }
+
+  beforeDestroy () {
+    this.bgPop()
+  }
+
+  bgPush () {
+    if (this.post.featured_image) {
+      this.$store.commit('bg:push', this.post.featured_image)
+      this.bgcur = true
+    }
+  }
+
+  bgPop () {
+    if (this.bgcur) {
+      this.$store.commit('bg:pop')
+      this.bgcur = false
+    }
+  }
 }
 </script>

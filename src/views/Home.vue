@@ -21,7 +21,7 @@
         </v-row>
         <v-row v-else justify="center">
           <v-col cols="auto">
-            <v-progress-circular indeterminate size="64"/>
+            <v-progress-circular indeterminate size="64" color="primary"/>
           </v-col>
         </v-row>
       </v-col>
@@ -39,7 +39,9 @@ export default class Home extends Vue {
   posts: BPost[] | null = null
   err: Error | null = null
 
-  async created () {
+  created () {
+    this.$store.commit('bg:push', 'https://cdn.buttercms.com/tm5ujWhTvKd03tIJycfE')
+    this.$once('hook:beforeDestroy', () => this.$store.commit('bg:pop'))
     this.load()
   }
 
@@ -50,7 +52,7 @@ export default class Home extends Vue {
 
       const res = await butter.post.list()
       this.posts = res.data.data
-      this.$store.commit('updateTitle', 'Posts')
+      this.$store.commit('title:update', 'Posts')
     } catch (e) {
       this.err = e
     }

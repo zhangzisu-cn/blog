@@ -48,7 +48,7 @@
     <template v-else>
       <v-row justify="center">
         <v-col cols="auto">
-          <v-progress-circular indeterminate size="64"/>
+          <v-progress-circular indeterminate size="64" color="primary"/>
         </v-col>
       </v-row>
     </template>
@@ -88,7 +88,7 @@ export default class Post extends Vue {
       this.prev = meta.previous_post
       this.next = meta.next_post
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.$store.commit('updateTitle', this.post!.title)
+      this.$store.commit('title:update', this.post!.title)
     } catch (e) {
       this.err = e
     }
