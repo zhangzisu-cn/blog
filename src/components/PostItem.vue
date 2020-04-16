@@ -2,14 +2,16 @@
   <v-card>
     <v-card-title v-text="post.title"/>
     <v-divider/>
-    <v-card-text v-html="post.body" style="overflow: hidden;"/>
+    <v-card-text>
+      <article class="markdown-body" v-html="post.body"/>
+    </v-card-text>
     <v-divider/>
-    <v-card-actions>
-      <v-chip pill color="primary"><v-avatar left><v-img :src="post.author.profile_image"/></v-avatar>{{post.author.first_name}} {{post.author.last_name}}</v-chip>
-      <v-chip color="secondary"><v-icon left>mdi-clock-outline</v-icon>{{ new Date(post.published).toLocaleString() }}</v-chip>
-      <v-chip v-for="(tag, i) in post.tags" :key="'t' + i"><v-icon left>mdi-label</v-icon>{{tag.name}}</v-chip>
-      <v-chip v-for="(cat, i) in post.categories" :key="'c' + i"><v-icon left>mdi-file-tree</v-icon>{{cat.name}}</v-chip>
-    </v-card-actions>
+    <div class="pl-1 pr-1">
+      <v-chip class="ma-1" label pill color="primary"><v-avatar left tile><v-img :src="post.author.profile_image"/></v-avatar>{{post.author.first_name}} {{post.author.last_name}}</v-chip>
+      <v-chip class="ma-1" label color="secondary"><v-icon left>mdi-clock-outline</v-icon>{{ new Date(post.published).toLocaleString() }}</v-chip>
+      <v-chip class="ma-1" label v-for="(tag, i) in post.tags" :key="'t' + i"><v-icon left>mdi-label</v-icon>{{tag.name}}</v-chip>
+      <v-chip class="ma-1" label v-for="(cat, i) in post.categories" :key="'c' + i"><v-icon left>mdi-file-tree</v-icon>{{cat.name}}</v-chip>
+    </div>
   </v-card>
 </template>
 
@@ -35,7 +37,11 @@ export default class PostItem extends Vue {
   }
 
   bgPush () {
-    if (this.post.featured_image) {
+    const stack = this.$store.state.bg
+    const back = stack[stack.length - 1]
+    if (this.post.featured_image === back) {
+      this.bgcur = true
+    } else if (this.post.featured_image) {
       this.$store.commit('bg:push', this.post.featured_image)
       this.bgcur = true
     }

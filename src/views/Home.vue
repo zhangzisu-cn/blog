@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="space-around">
-      <v-col cols="10" style="padding-top: 0;">
+      <v-col xs="12" md="8" lg="6" style="padding-top: 0;">
         <post-list v-if="posts" :posts="posts">
         </post-list>
         <v-row v-else-if="err" justify="center">
@@ -40,8 +40,6 @@ export default class Home extends Vue {
   err: Error | null = null
 
   created () {
-    this.$store.commit('bg:push', 'https://cdn.buttercms.com/tm5ujWhTvKd03tIJycfE')
-    this.$once('hook:beforeDestroy', () => this.$store.commit('bg:pop'))
     this.load()
   }
 

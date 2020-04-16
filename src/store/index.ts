@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     title: 'ZhangZisu.CN Blog',
-    bg: [] as string[]
+    bg: ['https://cdn.buttercms.com/tm5ujWhTvKd03tIJycfE']
   },
   mutations: {
     'title:update' (state, title: string) {
