@@ -7,18 +7,14 @@
   </v-row>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { butter } from '@/plugins/butter'
+import { butter, BPost } from '@/plugins/butter'
 import PostList from '@/components/PostList.vue'
 
 @Component({ components: { PostList } })
 export default class Home extends Vue {
-  data () {
-    return {
-      posts: []
-    }
-  }
+  posts: BPost[] = []
 
   async created () {
     const res = await butter.post.list()

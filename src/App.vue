@@ -3,6 +3,9 @@
     <v-app-bar app color="primary" dark>
       <div class="title">{{ $store.state.title }}</div>
       <v-spacer></v-spacer>
+      <v-btn text href="https://buttercms.com" target="_blank">
+        <img src="https://cdn.buttercms.com/RyJ7UhcVTCRqrCFXwgCo" height="36px">
+      </v-btn>
     </v-app-bar>
     <v-navigation-drawer app expand-on-hover disable-resize-watcher disable-route-watcher permanent :value="true">
       <v-list nav>
