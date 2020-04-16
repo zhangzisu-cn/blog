@@ -1,24 +1,5 @@
-# blog
+# ZhangZisu.CN Blog
 
-## Project setup
-```
-yarn install
-```
+![Netlify status](https://img.shields.io/netlify/fb7bef3d-d3d8-482e-93db-67e542c8d8b5?logo=netlify&style=flat-square)
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+ButterCMS blogging frontend, built with vuetify.
