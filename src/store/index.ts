@@ -9,7 +9,7 @@ export default new Vuex.Store({
   },
   mutations: {
     updateTitle (state, title: string) {
-      document.title = title
+      document.title = title + ' - ZhangZisu.CN Blog'
       state.title = title
     }
   },
