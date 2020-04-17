@@ -79,7 +79,7 @@ export default class FooterSettings extends Vue {
     this.$vuetify.theme.dark = localStorage.getItem('theme') === 'dark'
     this.acrylic = (localStorage.getItem('acrylic') || '1') !== '0'
     if (this.acrylic !== document.body.classList.contains('acrylic')) {
-      document.body.classList.add('acrylic')
+      document.body.classList.toggle('acrylic')
     }
   }
 }
