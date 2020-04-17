@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="space-around">
-      <v-col xs="12" md="8" lg="6" style="padding-top: 0;">
+      <v-col xs="12" md="8" lg="6">
         <post-list v-if="posts" :posts="posts">
         </post-list>
         <v-row v-else-if="err" justify="center">

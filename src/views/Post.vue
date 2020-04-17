@@ -2,7 +2,7 @@
   <v-container>
     <template v-if="post">
       <v-row justify="center" no-gutters>
-        <v-col cols="8">
+        <v-col xs="12" md="8" lg="6">
           <v-row>
             <v-col cols="12">
               <post-item :post="post">
