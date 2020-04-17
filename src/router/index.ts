@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '@/views/Home.vue'
 import Post from '@/views/Post.vue'
+import Link from '@/views/Link.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,12 @@ const routes: Array<RouteConfig> = [
     path: '/post/:slug',
     name: 'Post',
     component: Post,
+    props: true
+  },
+  {
+    path: '/link',
+    name: 'Link',
+    component: Link,
     props: true
   }
 ]

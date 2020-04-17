@@ -33,12 +33,12 @@
             <v-list-item-title>{{ this.$vuetify.theme.dark ? 'Dark' : 'White' }} theme</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item href="https://github.com/zhangzisu-cn/blog" target="_blank">
+        <v-list-item to="/link">
           <v-list-item-avatar tile size="24">
-            <v-icon>mdi-github</v-icon>
+            <v-icon>mdi-link</v-icon>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>Repository</v-list-item-title>
+            <v-list-item-title>Links</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
