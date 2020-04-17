@@ -29,9 +29,9 @@ import { Vue, Component } from 'vue-property-decorator'
 @Component
 export default class Link extends Vue {
   links = [
-    { icon: 'mdi-github', name: 'GitHub', link: 'https://github.com/zhangzisu-cn/blog' },
-    { avatar: 'https://www.gravatar.com/avatar/6563066d6b1ac788fca3a8033c382c46', name: 'skylee', link: 'https://www.cnblogs.com/skylee03/' },
-    { avatar: 'https://cdn.jsdelivr.net/gh/ZigZagK/jsDelivrCDN@latest/usr/uploads/2018/07/176242131.png', name: 'ZigZagK', link: 'https://zigzagk.top/' }
+    { avatar: 'https://www.gravatar.com/avatar/6563066d6b1ac788fca3a8033c382c46', name: 'skylee', link: 'https://skylee.xyz/' },
+    { avatar: 'https://cdn.jsdelivr.net/gh/ZigZagK/jsDelivrCDN@latest/usr/uploads/2018/07/176242131.png', name: 'ZigZagK', link: 'https://zigzagk.top/' },
+    { avatar: 'https://q1.qlogo.cn/g?b=qq&nk=1254846416&s=640', name: 'Mo Yi', link: 'https://moyi.ml/' }
   ]
 
   mounted () {
