@@ -46,22 +46,16 @@
     <v-content>
       <router-view/>
     </v-content>
-    <div id="background">
-      <v-img :src="bg" height="100%" transition="fade-transition"/>
-    </div>
+    <background/>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import Background from '@/components/Background.vue'
 
-@Component
+@Component({ components: { Background } })
 export default class App extends Vue {
-  get bg () {
-    const stack = this.$store.state.bg
-    return stack[stack.length - 1] || ''
-  }
-
   created () {
     this.$vuetify.theme.dark = !!localStorage.getItem('theme-dark')
   }
@@ -74,15 +68,6 @@ export default class App extends Vue {
 </script>
 
 <style>
-#background {
-  z-index: -1;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
-#background .v-image__image {
-  transition: .3s;
-}
 .theme--dark #logo .v-image__image {
   filter: invert(1);
 }
