@@ -2,10 +2,6 @@
   <v-app>
     <v-app-bar app dark>
       <div class="title">{{ $store.state.title }}</div>
-      <v-spacer></v-spacer>
-      <v-btn text href="https://buttercms.com" target="_blank">
-        <img src="https://cdn.buttercms.com/RyJ7UhcVTCRqrCFXwgCo" height="36px">
-      </v-btn>
     </v-app-bar>
     <v-navigation-drawer app expand-on-hover disable-resize-watcher disable-route-watcher permanent :value="true">
       <v-list nav>
@@ -46,6 +42,7 @@
     <v-content>
       <router-view/>
     </v-content>
+    <app-footer/>
     <background/>
   </v-app>
 </template>
@@ -53,8 +50,9 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import Background from '@/components/Background.vue'
+import AppFooter from '@/components/AppFooter.vue'
 
-@Component({ components: { Background } })
+@Component({ components: { Background, AppFooter } })
 export default class App extends Vue {
   created () {
     this.$vuetify.theme.dark = !!localStorage.getItem('theme-dark')

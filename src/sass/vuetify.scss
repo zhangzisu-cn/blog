@@ -8,7 +8,6 @@
 
 .v-application code {
   background-color: initial;
-  color: initial;
   -webkit-box-shadow: initial;
   box-shadow: initial;
 }
@@ -17,6 +16,6 @@
   content: none;
 }
 
-.v-app-bar, .v-card, .v-navigation-drawer {
+.v-app-bar, .v-footer, .v-card, .v-navigation-drawer, .v-menu__content {
   backdrop-filter: blur(10px)
 }
