@@ -48,7 +48,7 @@
     <template v-else>
       <v-row justify="center">
         <v-col cols="auto">
-          <v-progress-circular indeterminate size="64" color="primary"/>
+          <loading/>
         </v-col>
       </v-row>
     </template>
@@ -60,8 +60,9 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { BPost, butter } from '@/plugins/butter'
 import PostItem from '@/components/PostItem.vue'
 import PostMetaItem from '@/components/PostMetaItem.vue'
+import Loading from '@/components/Loading.vue'
 
-@Component({ components: { PostItem, PostMetaItem } })
+@Component({ components: { PostItem, PostMetaItem, Loading } })
 export default class Post extends Vue {
   @Prop({ required: true })
   slug!: string

@@ -11,7 +11,7 @@
       <v-list nav>
         <v-list-item href="https://zhangzisu.cn/" target="_blank">
           <v-list-item-avatar tile size="24">
-            <v-img id="logo" contain :src="require('@/assets/logo.png')"/>
+            <v-img id="logo" contain :src="require('@/assets/logo.svg')"/>
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>ZhangZisu.CN</v-list-item-title>

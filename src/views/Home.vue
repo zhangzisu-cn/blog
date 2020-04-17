@@ -21,7 +21,7 @@
         </v-row>
         <v-row v-else justify="center">
           <v-col cols="auto">
-            <v-progress-circular indeterminate size="64" color="primary"/>
+            <loading/>
           </v-col>
         </v-row>
       </v-col>
@@ -33,8 +33,9 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { butter, BPost } from '@/plugins/butter'
 import PostList from '@/components/PostList.vue'
+import Loading from '@/components/Loading.vue'
 
-@Component({ components: { PostList } })
+@Component({ components: { PostList, Loading } })
 export default class Home extends Vue {
   posts: BPost[] | null = null
   err: Error | null = null
