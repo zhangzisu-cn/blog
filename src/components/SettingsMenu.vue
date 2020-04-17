@@ -1,7 +1,7 @@
 <template>
-  <v-menu offset-x :close-on-content-click="false">
+  <v-menu offset-x :close-on-content-click="false" open-on-hover>
     <template v-slot:activator="{ on }">
-      <v-btn icon v-on="on">
+      <v-btn text v-on="on">
         <v-icon>mdi-cog</v-icon>
       </v-btn>
     </template>
