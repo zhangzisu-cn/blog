@@ -21,14 +21,6 @@
             <v-list-item-title>Posts</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item @click="changeTheme">
-          <v-list-item-avatar tile size="24">
-            <v-icon>mdi-brightness-6</v-icon>
-          </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title>{{ this.$vuetify.theme.dark ? 'Dark' : 'White' }} theme</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
         <v-list-item to="/link">
           <v-list-item-avatar tile size="24">
             <v-icon>mdi-link</v-icon>
@@ -53,16 +45,7 @@ import Background from '@/components/Background.vue'
 import AppFooter from '@/components/AppFooter.vue'
 
 @Component({ components: { Background, AppFooter } })
-export default class App extends Vue {
-  created () {
-    this.$vuetify.theme.dark = !!localStorage.getItem('theme-dark')
-  }
-
-  changeTheme () {
-    this.$vuetify.theme.dark = !this.$vuetify.theme.dark
-    localStorage.setItem('theme-dark', this.$vuetify.theme.dark ? '1' : '')
-  }
-}
+export default class App extends Vue {}
 </script>
 
 <style>

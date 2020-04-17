@@ -16,6 +16,8 @@
   content: none;
 }
 
-.v-app-bar, .v-footer, .v-card, .v-navigation-drawer, .v-menu__content {
-  backdrop-filter: blur(10px)
+.acrylic {
+  .v-app-bar, .v-footer, .v-card, .v-navigation-drawer, .v-menu__content {
+    backdrop-filter: blur(10px)
+  }
 }
