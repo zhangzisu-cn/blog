@@ -12,7 +12,6 @@ import { BPost } from '@/plugins/butter'
 
 @Component
 export default class PostMetaItem extends Vue {
-  @Prop({ required: true })
-  post!: BPost
+  @Prop({ required: true }) readonly post!: BPost
 }
 </script>

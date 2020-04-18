@@ -59,8 +59,8 @@ import { RawLocation } from 'vue-router'
 
 @Component({ components: { PostList, Loading } })
 export default class Search extends Vue {
-  @Prop() page?: string
-  @Prop() q?: string
+  @Prop() readonly page?: string
+  @Prop() readonly q?: string
 
   posts: BPost[] | null = null
   err: Error | null = null

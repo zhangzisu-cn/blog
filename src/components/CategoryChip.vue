@@ -8,7 +8,6 @@ import { BCategory } from '../plugins/butter'
 
 @Component
 export default class CategoryChip extends Vue {
-  @Prop({ required: true })
-  category!: BCategory
+  @Prop({ required: true }) readonly category!: BCategory
 }
 </script>

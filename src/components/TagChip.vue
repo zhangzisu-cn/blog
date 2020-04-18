@@ -8,7 +8,6 @@ import { BTag } from '../plugins/butter'
 
 @Component
 export default class TagChip extends Vue {
-  @Prop({ required: true })
-  tag!: BTag
+  @Prop({ required: true }) readonly tag!: BTag
 }
 </script>

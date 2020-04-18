@@ -64,8 +64,7 @@ import Loading from '@/components/Loading.vue'
 
 @Component({ components: { PostItem, PostMetaItem, Loading } })
 export default class Post extends Vue {
-  @Prop({ required: true })
-  slug!: string
+  @Prop({ required: true }) readonly slug!: string
 
   err: Error | null = null
 

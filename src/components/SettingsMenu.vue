@@ -11,14 +11,14 @@
         <v-list-item-icon><v-icon>mdi-brightness-6</v-icon></v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title><code>Color</code></v-list-item-title>
-          <v-list-item-subtitle>{{ this.$vuetify.theme.dark ? 'Dark' : 'Light' }}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{ $vuetify.theme.dark ? 'Dark' : 'Light' }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-list-item @click="changeAcrylic">
         <v-list-item-icon><v-icon>mdi-blur</v-icon></v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title><code>Acrylic</code></v-list-item-title>
-          <v-list-item-subtitle>{{ this.acrylic ? 'Enabled' : 'Disabled' }}</v-list-item-subtitle>
+          <v-list-item-subtitle>{{ acrylic ? 'Enabled' : 'Disabled' }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-divider/>
@@ -55,12 +55,12 @@ import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class SettingsMenu extends Vue {
-  gitHash = GIT_HASH
-  gitBranch = GIT_BRANCH
-  buildDate = BUILD_DATE
-  buildMachine = BUILD_MACHINE
+  readonly gitHash = GIT_HASH
+  readonly gitBranch = GIT_BRANCH
+  readonly buildDate = BUILD_DATE
+  readonly buildMachine = BUILD_MACHINE
 
-  acrylic!: boolean
+  acrylic = true
 
   created () {
     window.addEventListener('storage', () => this.reload())

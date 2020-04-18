@@ -11,11 +11,11 @@
                   : 'No posts found' }}</code>
                 <template v-if="tag">
                   <br/>
-                  <code>where exists tag {{ this.tag }}</code>
+                  <code>where exists tag {{ tag }}</code>
                 </template>
                 <template v-if="cat">
                   <br/>
-                  <code>where exists category {{ this.cat }}</code>
+                  <code>where exists category {{ cat }}</code>
                 </template>
                 <template v-if="tag || cat">
                   <br/>
@@ -75,9 +75,9 @@ import Sidebar from '@/components/Sidebar.vue'
 
 @Component({ components: { PostList, Loading, Sidebar } })
 export default class Home extends Vue {
-  @Prop() page?: string
-  @Prop() tag?: string
-  @Prop() cat?: string
+  @Prop() readonly page?: string
+  @Prop() readonly tag?: string
+  @Prop() readonly cat?: string
 
   posts: BPost[] | null = null
   err: Error | null = null

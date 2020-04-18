@@ -13,7 +13,6 @@ import PostListItem from '@/components/PostListItem.vue'
 
 @Component({ components: { PostListItem } })
 export default class PostList extends Vue {
-  @Prop({ required: true })
-  posts!: BPost[]
+  @Prop({ required: true }) readonly posts!: BPost[]
 }
 </script>

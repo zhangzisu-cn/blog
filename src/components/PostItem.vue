@@ -30,8 +30,7 @@ import CategoryChip from '@/components/CategoryChip.vue'
 
 @Component({ components: { TagChip, CategoryChip } })
 export default class PostItem extends Vue {
-  @Prop({ required: true })
-  post!: BPost
+  @Prop({ required: true }) readonly post!: BPost
 
   bgcur = false
 
