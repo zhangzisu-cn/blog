@@ -29,15 +29,19 @@ export default class PostListItem extends Vue {
   @Prop({ required: true }) readonly post!: BPost
 
   bgcur = false
+  timeout: number | null = null
 
   mouseenter () {
-    if (this.post.featured_image && !this.bgcur) {
-      this.$store.commit('bg:push', this.post.featured_image)
-      this.bgcur = true
-    }
+    this.timeout = setTimeout(() => {
+      if (this.post.featured_image && !this.bgcur) {
+        this.$store.commit('bg:push', this.post.featured_image)
+        this.bgcur = true
+      }
+    }, 200)
   }
 
   mouseleave () {
+    this.timeout && clearTimeout(this.timeout)
     if (this.bgcur) {
       this.$store.commit('bg:pop')
       this.bgcur = false
@@ -50,6 +54,7 @@ export default class PostListItem extends Vue {
   }
 
   beforeDestroy () {
+    this.timeout && clearTimeout(this.timeout)
     if (this.bgcur) {
       this.$store.commit('bg:pop')
       this.bgcur = false
