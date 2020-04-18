@@ -35,11 +35,15 @@ export default class Loading extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 .cls-1 {
   fill: none;
   stroke: #4585f3;
   stroke-miterlimit: 10;
   stroke-width: 32px;
+}
+
+svg {
+  filter: drop-shadow(7px 7px 7px #00000070);
 }
 </style>

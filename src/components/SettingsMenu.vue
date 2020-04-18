@@ -26,19 +26,22 @@
       <v-list-item :href="'https://github.com/zhangzisu-cn/blog/commit/' + gitHash" target="_blank">
         <v-list-item-icon><v-icon>mdi-git</v-icon></v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title><code>{{ gitHash.substr(0, 6) }}</code></v-list-item-title>
+          <v-list-item-title>Git Hash</v-list-item-title>
+          <v-list-item-subtitle><code>{{ gitHash.substr(0, 6) }}</code></v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
         <v-list-item-icon><v-icon>mdi-clock</v-icon></v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>{{ buildDate }}</v-list-item-title>
+          <v-list-item-title>Build Date</v-list-item-title>
+          <v-list-item-subtitle>{{ buildDate }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
       <v-list-item>
         <v-list-item-icon><v-icon>mdi-server</v-icon></v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>{{ buildMachine }}</v-list-item-title>
+          <v-list-item-title>Build Machine</v-list-item-title>
+          <v-list-item-subtitle>{{ buildMachine }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>
