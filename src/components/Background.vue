@@ -21,7 +21,7 @@ div {
   position: fixed;
   width: 100%;
   height: 100%;
-  transition: .3s;
+  transition: .1s;
   background-position: center center;
 }
 </style>

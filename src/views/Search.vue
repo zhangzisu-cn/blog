@@ -8,7 +8,7 @@
               <v-card-actions>
                 <v-text-field v-model.trim.lazy="queryInput" label="Criteria" placeholder="Type your query here"
                   :hint="postCount ? `Showing ${(curPage - 1) * postPerPage + 1}-${Math.min(curPage * postPerPage, postCount)} of ${postCount} posts` : 'No posts found'"
-                  persistent-hint append-icon="mdi-magnify" @click:append="query = queryInput" clearable />
+                  persistent-hint append-icon="mdi-magnify" @click:append="query = queryInput" clearable @keydown.enter="query = queryInput"/>
               </v-card-actions>
             </v-card>
           </v-col>
