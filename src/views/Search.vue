@@ -1,27 +1,15 @@
 <template>
   <v-container fluid>
     <v-row justify="center">
-      <v-col cols="12" sm="7" md="8" lg="6">
+      <v-col cols="12" sm="9" md="8" lg="6">
         <v-row justify="center">
           <v-col cols="12">
             <v-card>
-              <v-card-text>
-                <code>{{ postCount ?
-                  `Showing ${(curPage - 1) * postPerPage + 1}-${Math.min(curPage * postPerPage, postCount)} of ${postCount} posts`
-                  : 'No posts found' }}</code>
-                <template v-if="tag">
-                  <br/>
-                  <code>where exists tag {{ this.tag }}</code>
-                </template>
-                <template v-if="cat">
-                  <br/>
-                  <code>where exists category {{ this.cat }}</code>
-                </template>
-                <template v-if="tag || cat">
-                  <br/>
-                  <code><router-link to="/">clear filter</router-link></code>
-                </template>
-              </v-card-text>
+              <v-card-actions>
+                <v-text-field v-model.trim.lazy="queryInput" label="Criteria" placeholder="Type your query here"
+                  :hint="postCount ? `Showing ${(curPage - 1) * postPerPage + 1}-${Math.min(curPage * postPerPage, postCount)} of ${postCount} posts` : 'No posts found'"
+                  persistent-hint append-icon="mdi-magnify" @click:append="query = queryInput" clearable />
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
@@ -58,41 +46,41 @@
           </v-row>
         </template>
       </v-col>
-      <v-col cols="12" sm="5" md="4" lg="3">
-        <sidebar/>
-      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { RawLocation } from 'vue-router'
 import { butter, BPost } from '@/plugins/butter'
 import PostList from '@/components/PostList.vue'
 import Loading from '@/components/Loading.vue'
-import Sidebar from '@/components/Sidebar.vue'
+import { RawLocation } from 'vue-router'
 
-@Component({ components: { PostList, Loading, Sidebar } })
-export default class Home extends Vue {
+@Component({ components: { PostList, Loading } })
+export default class Search extends Vue {
   @Prop() page?: string
-  @Prop() tag?: string
-  @Prop() cat?: string
+  @Prop() q?: string
 
   posts: BPost[] | null = null
   err: Error | null = null
+  queryInput = ''
+  query = ''
   postCount = 1
   pageCount = 1
-  postPerPage = 10
+  postPerPage = 1
   curPage = 1
 
+  created () {
+    this.$store.commit('title:update', 'Search')
+  }
+
   generateParams () {
-    // eslint-disable-next-line @typescript-eslint/camelcase, @typescript-eslint/no-explicit-any
-    const params: any = { page: this.curPage, page_size: this.postPerPage }
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    if (this.tag) params.tag_slug = this.tag
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    if (this.cat) params.category_slug = this.cat
+    const params = {
+      page: this.curPage,
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      page_size: this.postPerPage
+    }
     return params
   }
 
@@ -100,30 +88,13 @@ export default class Home extends Vue {
     try {
       this.posts = this.err = null
 
-      this.loadTitle()
-      const res = await butter.post.list(this.generateParams())
+      const res = await butter.post.search(this.query, this.generateParams())
       const { data, meta } = res.data
       this.posts = data
       this.postCount = meta.count
       this.pageCount = Math.ceil(this.postCount / this.postPerPage)
     } catch (e) {
       this.err = e
-    }
-  }
-
-  async loadTitle () {
-    try {
-      if (this.tag) {
-        const res = await butter.tag.retrieve(this.tag)
-        this.$store.commit('title:update', res.data.data.name)
-      } else if (this.cat) {
-        const res = await butter.category.retrieve(this.cat)
-        this.$store.commit('title:update', res.data.data.name)
-      } else {
-        this.$store.commit('title:update', 'Posts')
-      }
-    } catch (e) {
-      this.$store.commit('title:update', 'Posts')
     }
   }
 
@@ -144,6 +115,32 @@ export default class Home extends Vue {
     } else {
       query.page = this.curPage.toString()
     }
+    this.go(query)
+  }
+
+  @Watch('q', { immediate: true })
+  _wQ () {
+    this.query = this.q || ''
+    this.load()
+  }
+
+  @Watch('query')
+  _wQuery () {
+    this.queryInput = this.query
+    if (this.query === (this.q || '')) {
+      return
+    }
+    const query = { ...this.$route.query }
+    if (this.query) {
+      query.q = this.query
+    } else {
+      delete query.q
+    }
+    this.go(query)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  go (query: any) {
     const next: RawLocation = {
       path: this.$route.path,
       query,
@@ -151,8 +148,5 @@ export default class Home extends Vue {
     }
     this.$router.push(next)
   }
-
-  @Watch('tag') _wTag () { this.load() }
-  @Watch('cat') _wCat () { this.load() }
 }
 </script>

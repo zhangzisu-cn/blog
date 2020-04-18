@@ -3,6 +3,8 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '@/views/Home.vue'
 import Post from '@/views/Post.vue'
 import Link from '@/views/Link.vue'
+import Search from '@/views/Search.vue'
+import NotFound from '@/views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -32,9 +34,19 @@ const routes: Array<RouteConfig> = [
     props: true
   },
   {
+    path: '/search',
+    name: 'Search',
+    component: Search,
+    props: route => ({ ...route.params, ...route.query })
+  },
+  {
     path: '/link',
     name: 'Link',
     component: Link
+  },
+  {
+    path: '*',
+    component: NotFound
   }
 ]
 

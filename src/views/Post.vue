@@ -80,8 +80,7 @@ export default class Post extends Vue {
 
   async load () {
     try {
-      this.post = null
-      this.err = null
+      this.post = this.err = null
 
       const res = await butter.post.retrieve(this.slug)
       const { data, meta } = res.data
