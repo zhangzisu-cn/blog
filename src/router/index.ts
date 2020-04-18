@@ -10,7 +10,20 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    props: route => ({ ...route.params, ...route.query })
+  },
+  {
+    path: '/tag/:tag',
+    name: 'Tag',
+    component: Home,
+    props: route => ({ ...route.params, ...route.query })
+  },
+  {
+    path: '/category/:cat',
+    name: 'Category',
+    component: Home,
+    props: route => ({ ...route.params, ...route.query })
   },
   {
     path: '/post/:slug',
@@ -21,8 +34,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/link',
     name: 'Link',
-    component: Link,
-    props: true
+    component: Link
   }
 ]
 

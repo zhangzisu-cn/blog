@@ -38,6 +38,11 @@
                 <v-list-item-title>RSS</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
+            <v-list-item href="/api/atom.xml" target="_blank">
+              <v-list-item-content>
+                <v-list-item-title>Atom</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
           </v-list>
         </v-menu>
       </v-col>

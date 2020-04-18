@@ -54,7 +54,7 @@ import { Vue, Component } from 'vue-property-decorator'
 /*  global GIT_HASH, GIT_BRANCH, BUILD_DATE, BUILD_MACHINE */
 
 @Component
-export default class FooterSettings extends Vue {
+export default class SettingsMenu extends Vue {
   gitHash = GIT_HASH
   gitBranch = GIT_BRANCH
   buildDate = BUILD_DATE
