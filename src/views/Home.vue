@@ -62,9 +62,9 @@ export default class Home extends Vue {
     // eslint-disable-next-line @typescript-eslint/camelcase, @typescript-eslint/no-explicit-any
     const params: any = { page: this.curPage, page_size: this.postPerPage }
     // eslint-disable-next-line @typescript-eslint/camelcase
-    if (this.tag)params.tag_slug = this.tag
+    if (this.tag) params.tag_slug = this.tag
     // eslint-disable-next-line @typescript-eslint/camelcase
-    if (this.cat)params.category_slug = this.cat
+    if (this.cat) params.category_slug = this.cat
     return params
   }
 

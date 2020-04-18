@@ -1,0 +1,25 @@
+name: Coding
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - run: npm i -g yarn
+    - run: yarn
+    - run: yarn build --modern
+    - run: cp dist/index.html dist/404.html
+    - uses: zhangzisu/git-repo-deploy-action@v0
+      with:
+        repo: ${{ secrets.CODING_REPO }}
+        name: ZhangZisu(CI)
+        email: system@zhangzisu.cn
+        single: true
