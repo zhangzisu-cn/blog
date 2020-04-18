@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app dark>
-      <v-app-bar-nav-icon v-if="$vuetify.breakpoint.xs"/>
+      <v-app-bar-nav-icon v-if="$vuetify.breakpoint.xs" @click="drawer = !drawer"/>
       <v-toolbar-title v-else>{{ $store.state.title }}</v-toolbar-title>
       <v-spacer/>
       <v-toolbar-items>
