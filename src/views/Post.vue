@@ -63,7 +63,7 @@ export default class Post extends Vue {
     try {
       this.post = this.err = null
 
-      const { data } = await wordpress.post.getBySlug(this.slug)
+      const { data } = await wordpress.post.fetchBySlug(this.slug)
       this.post = data
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       this.$store.commit('title:update', stripHtml(this.post!.title.rendered))

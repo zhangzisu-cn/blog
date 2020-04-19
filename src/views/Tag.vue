@@ -2,9 +2,14 @@
   <v-container fluid>
     <v-row justify="center">
       <v-col cols="12" sm="7" md="8" lg="6">
-        <v-row justify="center">
+        <v-row justify="center" v-if="tag">
           <v-col cols="12">
             <v-card>
+              <v-card-title>{{ tag.name }}</v-card-title>
+              <v-card-text v-if="tag.description">
+                {{ tag.description }}
+              </v-card-text>
+              <v-divider/>
               <v-card-text>
                 <code>{{ postCount ?
                   `Showing ${(curPage - 1) * postPerPage + 1}-${Math.min(curPage * postPerPage, postCount)} of ${postCount} posts`
@@ -59,12 +64,14 @@ import { RawLocation } from 'vue-router'
 import PostList from '@/components/PostList.vue'
 import Loading from '@/components/Loading.vue'
 import Sidebar from '@/components/Sidebar.vue'
-import { wordpress, PostSchema, PostListArgs } from '@/plugins/wordpress'
+import { wordpress, PostSchema, PostListArgs, TagSchema } from '@/plugins/wordpress'
 
 @Component({ components: { PostList, Loading, Sidebar } })
-export default class Home extends Vue {
+export default class Tag extends Vue {
   @Prop() readonly page?: string
+  @Prop() readonly slug!: string
 
+  tag: TagSchema | null = null
   posts: PostSchema[] | null = null
   err: Error | null = null
   postCount = 1
@@ -77,14 +84,19 @@ export default class Home extends Vue {
       page: this.curPage,
       // eslint-disable-next-line @typescript-eslint/camelcase
       per_page: this.postPerPage,
-      _embed: true
+      _embed: true,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      tags: [this.tag!.id]
     }
     return params
   }
 
   async load () {
     try {
-      this.err = this.posts = null
+      this.tag = this.err = this.posts = null
+
+      this.tag = (await wordpress.tag.fetchBySlug(this.slug)).data
+      this.$store.commit('title:update', 'Tag: ' + this.tag.name)
 
       const { data, meta } = await wordpress.post.list(this.generateParams())
       this.posts = data
@@ -118,10 +130,6 @@ export default class Home extends Vue {
       params: this.$route.params
     }
     this.$router.push(next)
-  }
-
-  created () {
-    this.$store.commit('title:update', 'Posts')
   }
 }
 </script>

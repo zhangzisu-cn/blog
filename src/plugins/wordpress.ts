@@ -31,7 +31,7 @@ export interface TagListArgs extends GlobalArgs {
 
   hide_empty?: boolean;
   post?: number;
-  slug?: string;
+  slug?: string[];
 }
 
 class TagAPI {
@@ -49,6 +49,11 @@ class TagAPI {
       totalPages: parseInt(res.headers.get('X-WP-TotalPages')!)
     }
     return { data, meta }
+  }
+
+  async fetchBySlug (slug: string) {
+    const { data } = await this.list({ slug: [slug], page: 1, per_page: 1, _embed: true })
+    return { data: data[0] }
   }
 }
 
@@ -78,7 +83,7 @@ export interface CategoryListArgs extends GlobalArgs {
   hide_empty?: boolean;
   parent?: number;
   post?: number;
-  slug?: string;
+  slug?: string[];
 }
 
 class CategoryAPI {
@@ -96,6 +101,11 @@ class CategoryAPI {
       totalPages: parseInt(res.headers.get('X-WP-TotalPages')!)
     }
     return { data, meta }
+  }
+
+  async fetchBySlug (slug: string) {
+    const { data } = await this.list({ slug: [slug], page: 1, per_page: 1, _embed: true })
+    return { data: data[0] }
   }
 }
 
@@ -169,13 +179,13 @@ class PostAPI {
     return { data, meta }
   }
 
-  async get (id: number, args?: PostRetrieveArgs) {
+  async retrieve (id: number, args?: PostRetrieveArgs) {
     const res = await this.wp.get('/posts/' + id, args)
     const data = await res.json() as PostSchema
     return { data }
   }
 
-  async getBySlug (slug: string) {
+  async fetchBySlug (slug: string) {
     const { data } = await this.list({ slug: [slug], page: 1, per_page: 1, _embed: true })
     return { data: data[0] }
   }
