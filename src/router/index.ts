@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '@/views/Home.vue'
-import Post from '@/views/Post.vue'
-import Link from '@/views/Link.vue'
-import Search from '@/views/Search.vue'
-import NotFound from '@/views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -13,40 +9,40 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'Home',
     component: Home,
-    props: route => ({ ...route.params, ...route.query })
-  },
-  {
-    path: '/tag/:tag',
-    name: 'Tag',
-    component: Home,
-    props: route => ({ ...route.params, ...route.query })
-  },
-  {
-    path: '/category/:cat',
-    name: 'Category',
-    component: Home,
-    props: route => ({ ...route.params, ...route.query })
-  },
-  {
-    path: '/post/:slug',
-    name: 'Post',
-    component: Post,
-    props: true
+    props: route => route.query
   },
   {
     path: '/search',
     name: 'Search',
-    component: Search,
-    props: route => ({ ...route.params, ...route.query })
+    component: () => import(/* webpackChunkName: "filter" */'@/views/Search.vue'),
+    props: route => route.query
+  },
+  {
+    path: '/tag/:slug',
+    name: 'Tag',
+    component: () => import(/* webpackChunkName: "filter" */'@/views/Tag.vue'),
+    props: route => ({ ...route.query, ...route.params })
+  },
+  {
+    path: '/category/:slug',
+    name: 'Category',
+    component: () => import(/* webpackChunkName: "filter" */'@/views/Category.vue'),
+    props: route => ({ ...route.query, ...route.params })
+  },
+  {
+    path: '/post/:slug',
+    name: 'Post',
+    component: () => import(/* webpackChunkName: "content" */'@/views/Post.vue'),
+    props: true
   },
   {
     path: '/link',
     name: 'Link',
-    component: Link
+    component: () => import(/* webpackChunkName: "content" */'@/views/Link.vue')
   },
   {
     path: '*',
-    component: NotFound
+    component: () => import(/* webpackChunkName: "misc" */'@/views/NotFound.vue')
   }
 ]
 

@@ -4,10 +4,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { BTag } from '../plugins/butter'
+import { TagSchema } from '@/plugins/wordpress'
 
 @Component
 export default class TagChip extends Vue {
-  @Prop({ required: true }) readonly tag!: BTag
+  @Prop({ required: true }) readonly tag!: TagSchema
 }
 </script>

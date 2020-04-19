@@ -10,12 +10,12 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { butter, BCategory } from '@/plugins/butter'
 import CategoryChip from '@/components/CategoryChip.vue'
+import { CategorySchema, wordpress } from '@/plugins/wordpress'
 
 @Component({ components: { CategoryChip } })
 export default class CategoriesCard extends Vue {
-  categories: BCategory[] | null = null
+  categories: CategorySchema[] | null = null
   err: Error | null = null
 
   created () {
@@ -26,8 +26,9 @@ export default class CategoriesCard extends Vue {
     this.categories = this.err = null
 
     try {
-      const res = await butter.category.list()
-      this.categories = res.data.data
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      const { data } = await wordpress.category.list({ per_page: 100 })
+      this.categories = data
     } catch (e) {
       this.err = e
     }

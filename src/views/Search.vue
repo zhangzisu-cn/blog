@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { butter, BPost } from '@/plugins/butter'
+import { PostSchema, PostListArgs, wordpress } from '@/plugins/wordpress'
 import PostList from '@/components/PostList.vue'
 import Loading from '@/components/Loading.vue'
 import { RawLocation } from 'vue-router'
@@ -62,13 +62,13 @@ export default class Search extends Vue {
   @Prop() readonly page?: string
   @Prop() readonly q?: string
 
-  posts: BPost[] | null = null
+  posts: PostSchema[] | null = null
   err: Error | null = null
   queryInput = ''
   query = ''
   postCount = 1
   pageCount = 1
-  postPerPage = 1
+  postPerPage = 10
   curPage = 1
 
   created () {
@@ -76,10 +76,12 @@ export default class Search extends Vue {
   }
 
   generateParams () {
-    const params = {
+    const params: PostListArgs = {
       page: this.curPage,
       // eslint-disable-next-line @typescript-eslint/camelcase
-      page_size: this.postPerPage
+      per_page: this.postPerPage,
+      search: this.query,
+      _embed: true
     }
     return params
   }
@@ -88,11 +90,10 @@ export default class Search extends Vue {
     try {
       this.posts = this.err = null
 
-      const res = await butter.post.search(this.query, this.generateParams())
-      const { data, meta } = res.data
+      const { data, meta } = await wordpress.post.list(this.generateParams())
       this.posts = data
-      this.postCount = meta.count
-      this.pageCount = Math.ceil(this.postCount / this.postPerPage)
+      this.postCount = meta.total
+      this.pageCount = meta.totalPages
     } catch (e) {
       this.err = e
     }
