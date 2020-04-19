@@ -23,25 +23,9 @@
           </template>
           <span>BY-SA</span>
         </v-tooltip>
-        <v-menu open-on-hover>
-          <template v-slot:activator="{ on }">
-            <v-btn icon v-on="on">
-              <v-icon>mdi-rss</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item href="/api/rss.xml" target="_blank">
-              <v-list-item-content>
-                <v-list-item-title>RSS</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item href="/api/atom.xml" target="_blank">
-              <v-list-item-content>
-                <v-list-item-title>Atom</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <v-btn icon href="https://zhangzisu.wordpress.com/feed/" target="_blank">
+          <v-icon>mdi-rss</v-icon>
+        </v-btn>
       </v-col>
     </v-row>
   </v-footer>
