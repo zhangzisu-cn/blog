@@ -61,6 +61,30 @@ import SettingsMenu from '@/components/SettingsMenu.vue'
 @Component({ components: { Background, AppFooter, SettingsMenu } })
 export default class App extends Vue {
   drawer = !this.$vuetify.breakpoint.xs
+
+  created () {
+    this.parseReferrer()
+  }
+
+  parseReferrer () {
+    let ref = decodeURI(document.referrer)
+    const prefix = /https?:\/\/zhangzisu.wordpress.com/
+    if (prefix.test(ref)) {
+      ref = ref.replace(prefix, '')
+      let match = /^\/([0-9]{4})\/([0-9]{2})\/([0-9]{2})\/(.+)/.exec(ref)
+      if (match) {
+        this.$router.push('/post/' + match[4])
+      }
+      match = /^\/tag\/(.+)/.exec(ref)
+      if (match) {
+        this.$router.push('/tag/' + match[1])
+      }
+      match = /^\/category\/(.+)/.exec(ref)
+      if (match) {
+        this.$router.push('/category/' + match[1])
+      }
+    }
+  }
 }
 </script>
 

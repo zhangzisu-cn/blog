@@ -14,35 +14,35 @@ const routes: Array<RouteConfig> = [
   {
     path: '/search',
     name: 'Search',
-    component: () => import('@/views/Search.vue'),
+    component: () => import(/* webpackChunkName: "filter" */'@/views/Search.vue'),
     props: route => route.query
   },
   {
     path: '/tag/:slug',
     name: 'Tag',
-    component: () => import('@/views/Tag.vue'),
+    component: () => import(/* webpackChunkName: "filter" */'@/views/Tag.vue'),
     props: route => ({ ...route.query, ...route.params })
   },
   {
     path: '/category/:slug',
     name: 'Category',
-    component: () => import('@/views/Category.vue'),
+    component: () => import(/* webpackChunkName: "filter" */'@/views/Category.vue'),
     props: route => ({ ...route.query, ...route.params })
   },
   {
     path: '/post/:slug',
     name: 'Post',
-    component: () => import('@/views/Post.vue'),
+    component: () => import(/* webpackChunkName: "content" */'@/views/Post.vue'),
     props: true
   },
   {
     path: '/link',
     name: 'Link',
-    component: () => import('@/views/Link.vue')
+    component: () => import(/* webpackChunkName: "content" */'@/views/Link.vue')
   },
   {
     path: '*',
-    component: () => import('@/views/NotFound.vue')
+    component: () => import(/* webpackChunkName: "misc" */'@/views/NotFound.vue')
   }
 ]
 
