@@ -3,6 +3,7 @@ const os = require('os')
 const { DefinePlugin } = require('webpack')
 const gitRevision = require('git-revision')
 const ciDetect = require('@npmcli/ci-detect')
+const AsyncStylesheetWebpackPlugin = require('async-stylesheet-webpack-plugin')
 
 module.exports = {
   transpileDependencies: [
@@ -18,6 +19,7 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
+      new AsyncStylesheetWebpackPlugin(),
       new DefinePlugin({
         GIT_HASH: JSON.stringify(gitRevision('hash')),
         GIT_BRANCH: JSON.stringify(gitRevision('branch')),
