@@ -10,12 +10,12 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { BTag, butter } from '@/plugins/butter'
+import { TagSchema, wordpress } from '@/plugins/wordpress'
 import TagChip from '@/components/TagChip.vue'
 
 @Component({ components: { TagChip } })
 export default class TagsCard extends Vue {
-  tags: BTag[] | null = null
+  tags: TagSchema[] | null = null
   err: Error | null = null
 
   created () {
@@ -26,8 +26,9 @@ export default class TagsCard extends Vue {
     this.tags = this.err = null
 
     try {
-      const res = await butter.tag.list()
-      this.tags = res.data.data
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      const { data } = await wordpress.tag.list({ per_page: 100 })
+      this.tags = data
     } catch (e) {
       this.err = e
     }

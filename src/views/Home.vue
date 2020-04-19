@@ -9,18 +9,6 @@
                 <code>{{ postCount ?
                   `Showing ${(curPage - 1) * postPerPage + 1}-${Math.min(curPage * postPerPage, postCount)} of ${postCount} posts`
                   : 'No posts found' }}</code>
-                <template v-if="tag">
-                  <br/>
-                  <code>where exists tag {{ tag }}</code>
-                </template>
-                <template v-if="cat">
-                  <br/>
-                  <code>where exists category {{ cat }}</code>
-                </template>
-                <template v-if="tag || cat">
-                  <br/>
-                  <code><router-link to="/">clear filter</router-link></code>
-                </template>
               </v-card-text>
             </v-card>
           </v-col>
@@ -68,18 +56,16 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { RawLocation } from 'vue-router'
-import { butter, BPost } from '@/plugins/butter'
 import PostList from '@/components/PostList.vue'
 import Loading from '@/components/Loading.vue'
 import Sidebar from '@/components/Sidebar.vue'
+import { wordpress, PostSchema, PostListArgs } from '../plugins/wordpress'
 
 @Component({ components: { PostList, Loading, Sidebar } })
 export default class Home extends Vue {
   @Prop() readonly page?: string
-  @Prop() readonly tag?: string
-  @Prop() readonly cat?: string
 
-  posts: BPost[] | null = null
+  posts: PostSchema[] | null = null
   err: Error | null = null
   postCount = 1
   pageCount = 1
@@ -87,43 +73,25 @@ export default class Home extends Vue {
   curPage = 1
 
   generateParams () {
-    // eslint-disable-next-line @typescript-eslint/camelcase, @typescript-eslint/no-explicit-any
-    const params: any = { page: this.curPage, page_size: this.postPerPage }
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    if (this.tag) params.tag_slug = this.tag
-    // eslint-disable-next-line @typescript-eslint/camelcase
-    if (this.cat) params.category_slug = this.cat
+    const params: PostListArgs = {
+      page: this.curPage,
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      per_page: this.postPerPage,
+      _embed: true
+    }
     return params
   }
 
   async load () {
     try {
-      this.posts = this.err = null
+      this.err = this.posts = null
 
-      this.loadTitle()
-      const res = await butter.post.list(this.generateParams())
-      const { data, meta } = res.data
+      const { data, meta } = await wordpress.post.list(this.generateParams())
       this.posts = data
-      this.postCount = meta.count
-      this.pageCount = Math.ceil(this.postCount / this.postPerPage)
+      this.postCount = meta.total
+      this.pageCount = meta.totalPages
     } catch (e) {
       this.err = e
-    }
-  }
-
-  async loadTitle () {
-    try {
-      if (this.tag) {
-        const res = await butter.tag.retrieve(this.tag)
-        this.$store.commit('title:update', res.data.data.name)
-      } else if (this.cat) {
-        const res = await butter.category.retrieve(this.cat)
-        this.$store.commit('title:update', res.data.data.name)
-      } else {
-        this.$store.commit('title:update', 'Posts')
-      }
-    } catch (e) {
-      this.$store.commit('title:update', 'Posts')
     }
   }
 
@@ -152,7 +120,8 @@ export default class Home extends Vue {
     this.$router.push(next)
   }
 
-  @Watch('tag') _wTag () { this.load() }
-  @Watch('cat') _wCat () { this.load() }
+  created () {
+    this.$store.commit('title:update', 'Posts')
+  }
 }
 </script>

@@ -8,11 +8,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { BPost } from '@/plugins/butter'
 import PostListItem from '@/components/PostListItem.vue'
+import { PostSchema } from '@/plugins/wordpress'
 
 @Component({ components: { PostListItem } })
 export default class PostList extends Vue {
-  @Prop({ required: true }) readonly posts!: BPost[]
+  @Prop({ required: true }) readonly posts!: PostSchema[]
 }
 </script>

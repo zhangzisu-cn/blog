@@ -2,35 +2,41 @@
   <v-card>
     <v-card-title>
       <div>
-        <div class="title">{{ post.title }}</div>
+        <div class="title" v-html="post.title.rendered"/>
         <div>
-          <v-chip small class="pa-2" label color="transparent"><v-avatar left tile><v-img :src="post.author.profile_image"/></v-avatar>{{post.author.first_name}} {{post.author.last_name}}</v-chip>
-          <v-chip small class="pa-2 ml-1" label color="transparent"><v-icon left>mdi-clock-outline</v-icon>{{ new Date(post.published).toLocaleString() }}</v-chip>
+          <v-chip class="pa-1" small label color="transparent">
+            <v-icon left>mdi-clock-outline</v-icon>
+            {{ new Date(post.date_gmt).toLocaleString() }}
+          </v-chip>
+          <v-chip class="ml-1" small label color="#0073aa" dark :href="post.link" target="_blank">
+            <v-icon left>mdi-wordpress</v-icon>
+            View on WordPress
+          </v-chip>
         </div>
       </div>
     </v-card-title>
     <v-divider/>
     <v-card-text>
-      <article class="markdown-body line-numbers" v-html="post.body" ref="content"/>
+      <article class="markdown-body line-numbers" v-html="post.content.rendered" ref="content"/>
     </v-card-text>
     <v-divider/>
     <div class="pl-1 pr-1">
-      <tag-chip class="ma-1" v-for="(tag, i) in post.tags" :key="'t' + i" :tag="tag"/>
-      <category-chip class="ma-1" v-for="(cat, i) in post.categories" :key="'c' + i" :category="cat"/>
+      <tag-chip class="ma-1" v-for="(tag, i) in post._embedded['wp:term'][1]" :key="'t' + i" :tag="tag"/>
+      <category-chip class="ma-1" v-for="(cat, i) in post._embedded['wp:term'][0]" :key="'c' + i" :category="cat"/>
     </div>
   </v-card>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { BPost } from '@/plugins/butter'
 import Prism from '@/plugins/prism'
 import TagChip from '@/components/TagChip.vue'
 import CategoryChip from '@/components/CategoryChip.vue'
+import { PostSchema } from '@/plugins/wordpress'
 
 @Component({ components: { TagChip, CategoryChip } })
 export default class PostItem extends Vue {
-  @Prop({ required: true }) readonly post!: BPost
+  @Prop({ required: true }) readonly post!: PostSchema
 
   bgcur = false
 
@@ -46,10 +52,11 @@ export default class PostItem extends Vue {
 
     const stack = this.$store.state.bg
     const back = stack[stack.length - 1]
-    if (this.post.featured_image === back) {
+    const fimg = this.post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.full?.source_url
+    if (fimg === back) {
       this.bgcur = true
-    } else if (this.post.featured_image) {
-      this.$store.commit('bg:push', this.post.featured_image)
+    } else if (fimg) {
+      this.$store.commit('bg:push', fimg)
       this.bgcur = true
     }
   }
@@ -63,8 +70,9 @@ export default class PostItem extends Vue {
   }
 
   bgPush () {
-    if (this.post.featured_image) {
-      this.$store.commit('bg:push', this.post.featured_image)
+    const fimg = this.post._embedded?.['wp:featuredmedia']?.[0]?.media_details?.sizes?.full?.source_url
+    if (fimg) {
+      this.$store.commit('bg:push', fimg)
       this.bgcur = true
     }
   }

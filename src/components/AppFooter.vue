@@ -7,9 +7,6 @@
         </v-btn>
       </v-col>
       <v-col cols="auto">
-        <v-btn text href="https://buttercms.com" target="_blank" class="pa-0">
-          <img src="https://cdn.buttercms.com/RyJ7UhcVTCRqrCFXwgCo" height="36px">
-        </v-btn>
         <v-tooltip top>
           <template v-slot:activator="{ on }">
             <v-btn icon href="https://github.com/zhangzisu-cn/blog/blob/master/LICENSE" target="_blank" v-on="on">
